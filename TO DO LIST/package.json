@@ -4,12 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "tsc --watch"
+    "start": "tsc --watch",
+    "test": "npx jest"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/jest": "^29.5.5",
+    "ts-jest": "^29.1.1",
     "typescript": "^5.2.2"
   },
   "dependencies": {
