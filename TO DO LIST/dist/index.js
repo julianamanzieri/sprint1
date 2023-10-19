@@ -1,41 +1,50 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const uuid_1 = require("uuid");
-const inputElement = document.querySelector(".new-task-input");
-const addTaskButton = document.querySelector(".new-task-button");
-const tasksContainer = document.querySelector(".tasks-container");
-const form = document.querySelector("form");
+const list = document.querySelector("#list");
+const form = document.querySelector("#new-task-form");
+const input = document.querySelector("#new-task-title");
 const tasks = loadTasks();
-tasks.forEach(addTask);
+tasks.forEach(addListItem);
 form === null || form === void 0 ? void 0 : form.addEventListener("submit", (e) => {
     e.preventDefault();
-    if ((inputElement === null || inputElement === void 0 ? void 0 : inputElement.value) === "" || (inputElement === null || inputElement === void 0 ? void 0 : inputElement.value) == null)
+    if ((input === null || input === void 0 ? void 0 : input.value) === "" || (input === null || input === void 0 ? void 0 : input.value) == null)
         return;
-    const task = {
+    const newTask = {
         id: (0, uuid_1.v4)(),
-        title: inputElement.value,
+        title: input.value,
         completed: false,
         createdAt: new Date(),
     };
-    tasks.push(task);
+    tasks.push(newTask);
     saveTasks();
-    addTask(task);
-    inputElement.value = "";
+    addListItem(newTask);
+    input.value = "";
 });
-function addTask(task) {
-    const listItem = document.createElement("li");
+function addListItem(task) {
+    const item = document.createElement("li");
     const label = document.createElement("label");
     const checkbox = document.createElement("input");
+    const removeButton = document.createElement("button");
     checkbox.addEventListener("change", () => {
         task.completed = checkbox.checked;
         saveTasks();
     });
     checkbox.type = "checkbox";
     checkbox.checked = task.completed;
-    label.appendChild(checkbox);
-    label.appendChild(document.createTextNode(task.title));
-    listItem.appendChild(label);
-    tasksContainer === null || tasksContainer === void 0 ? void 0 : tasksContainer.appendChild(listItem);
+    removeButton.className = "remove-button";
+    removeButton.textContent = "Remove";
+    removeButton.setAttribute("data-task-id", task.id);
+    removeButton.addEventListener("click", (e) => {
+        const taskId = e.target.getAttribute("data-task-id");
+        if (taskId) {
+            removeTask(taskId);
+            item.remove();
+        }
+    });
+    label.append(checkbox, task.title);
+    item.append(label);
+    list === null || list === void 0 ? void 0 : list.appendChild(item);
 }
 const saveTasks = () => {
     localStorage.setItem("TASKS", JSON.stringify(tasks));
@@ -48,7 +57,7 @@ function loadTasks() {
 }
 function displayTasks() {
     tasks.forEach((task) => {
-        addTask(task);
+        addListItem(task);
     });
 }
 function removeTask(taskId) {

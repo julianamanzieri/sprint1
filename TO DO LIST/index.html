@@ -5,17 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TO DO LIST</title>
-    <link rel="stylesheet" href="./styles.css">
+    <style>
+        #list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .remove-button {
+            margin-left: 10px;
+        }
+    </style>
 </head>
 
 <body>
     <ul id="list"></ul>
     <form id="new-task-form">
-        <input type="text" id="new-task-input" placeholder="Create task">
-        <button id="new-task-button">Add task</button>
+        <input type="text" id="new-task-title" placeholder="Enter a new task">
+        <button type="submit">Add Task</button>
     </form>
 
-    <script src="index.js"></script>
+    <script type="module" src="./dist/index.js"></script>
 </body>
 
 </html>

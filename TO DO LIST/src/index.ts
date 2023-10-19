@@ -9,44 +9,42 @@ type Task = {
 };
 
 // Seleciona os elementos HTML
-const inputElement =
-  document.querySelector<HTMLInputElement>(".new-task-input");
-const addTaskButton =
-  document.querySelector<HTMLButtonElement>(".new-task-button");
-const tasksContainer = document.querySelector<HTMLElement>(".tasks-container");
-const form = document.querySelector("form");
+const list = document.querySelector("#list") as HTMLUListElement;
+const form = document.querySelector("#new-task-form") as HTMLFormElement;
+const input = document.querySelector("#new-task-title") as HTMLInputElement;
 
 // Carrega as tarefas e as exibe
 const tasks: Task[] = loadTasks();
-tasks.forEach(addTask);
+tasks.forEach(addListItem);
 
 // Envio de formulario para add uma nova tarefa
 form?.addEventListener("submit", (e) => {
   e.preventDefault();
 
-  if (inputElement?.value === "" || inputElement?.value == null) return;
+  if (input?.value === "" || input?.value == null) return;
 
-  const task: Task = {
+  const newTask: Task = {
     id: uuidV4(),
-    title: inputElement.value,
+    title: input.value,
     completed: false,
     createdAt: new Date(),
   };
   // add a nova tarefa ao array
-  tasks.push(task);
+  tasks.push(newTask);
   // salvar as tarefas
   saveTasks();
   // add a nova atrefa na lista
-  addTask(task);
+  addListItem(newTask);
   // limpa o campo de entrada
-  inputElement.value = "";
+  input.value = "";
 });
 
 // Cria elemento HTML para exibir uma tarefa e add na lista
-function addTask(task: Task) {
-  const listItem = document.createElement("li");
+function addListItem(task: Task) {
+  const item = document.createElement("li");
   const label = document.createElement("label");
   const checkbox = document.createElement("input");
+  const removeButton = document.createElement("button");
   // marca tarefa como feita
   checkbox.addEventListener("change", () => {
     task.completed = checkbox.checked;
@@ -56,10 +54,24 @@ function addTask(task: Task) {
   checkbox.type = "checkbox";
   checkbox.checked = task.completed;
 
-  label.appendChild(checkbox);
-  label.appendChild(document.createTextNode(task.title));
-  listItem.appendChild(label);
-  tasksContainer?.appendChild(listItem);
+  // Configuração do botão "Remover"
+  removeButton.className = "remove-button";
+  removeButton.textContent = "Remove";
+  removeButton.setAttribute("data-task-id", task.id);
+
+  // Ouvinte de evento de clique para o botão "Remover"
+  removeButton.addEventListener("click", (e) => {
+    const taskId = (e.target as HTMLElement).getAttribute("data-task-id");
+    if (taskId) {
+      removeTask(taskId);
+      item.remove(); // Remove o item da lista no DOM
+    }
+  });
+
+  // Add elemnetos a lista
+  label.append(checkbox, task.title);
+  item.append(label);
+  list?.appendChild(item);
 }
 
 // Armazena as tarefas
@@ -77,7 +89,7 @@ function loadTasks(): Task[] {
 // Exibe todas as tarefas existentes
 function displayTasks() {
   tasks.forEach((task) => {
-    addTask(task);
+    addListItem(task);
   });
 }
 

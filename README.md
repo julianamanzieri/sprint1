@@ -1,6 +1,6 @@
 # To Do List
 
-# Aplicación
+## Aplicación
 
 Este es un sencillho programa para crear una aplicación de lista de tareas utilizando TypeScript y TDD. Los usuarios pueden agregar tareas, marcarlas como completadas y eliminar tareas de la lista.
 
@@ -16,11 +16,41 @@ Este es un sencillho programa para crear una aplicación de lista de tareas util
 - [TypeScript](https://www.typescriptlang.org/)
 - [UUID](https://www.npmjs.com/package/uuid) para generar IDs de tarea únicos.
 
-## Uso
+## Intruciones de Uso
 
 1. Clona el repositorio:
 
-   ```bash
-   git clone https://github.com/tunombreusuario/todo-list.git
-   cd todo-list
    ```
+   git clone https://github.com/https://github.com/julianamanzieri/sprint1
+   ```
+
+2. Instala las dependencias:
+
+   ```
+   npm install
+   ```
+
+3. Ejecuta el programa utilizando el siguiente comando:
+
+   ```
+   npm start
+   ```
+
+4. Aparecerá un menú con las opciones disponibles:
+
+- `Add`: agrega una nueva tarea.
+- `Checkbox`: Marca una tarea como completada.
+- `Remove`: Elimina una tarea
+- `Display`: Muestra todas las tareas.
+
+## Prerrequisitos
+
+Instale Node.js y npm en tu sistema.
+
+## Pruebas
+
+Este proyecto utiliza Jest para realizar pruebas.
+
+- `npm test`: Ejecuta las pruebas utilizando Jest.
+
+Este proyecto fue desarrollado como Sprint 1 en IT Academy.
