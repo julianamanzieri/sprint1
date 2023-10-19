@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "tsc --watch",
     "test": "npx jest"
@@ -11,11 +12,13 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/inquirer": "^9.0.5",
     "@types/jest": "^29.5.5",
     "ts-jest": "^29.1.1",
     "typescript": "^5.2.2"
   },
   "dependencies": {
+    "inquirer": "^9.2.11",
     "uuid": "^9.0.1"
   }
 }

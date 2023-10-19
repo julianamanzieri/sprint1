@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.removeTask = exports.displayTasks = exports.loadTasks = exports.addListItem = void 0;
 const uuid_1 = require("uuid");
 const list = document.querySelector("#list");
 const form = document.querySelector("#new-task-form");
@@ -46,6 +47,7 @@ function addListItem(task) {
     item.append(label);
     list === null || list === void 0 ? void 0 : list.appendChild(item);
 }
+exports.addListItem = addListItem;
 const saveTasks = () => {
     localStorage.setItem("TASKS", JSON.stringify(tasks));
 };
@@ -55,11 +57,13 @@ function loadTasks() {
         return [];
     return JSON.parse(taskJson);
 }
+exports.loadTasks = loadTasks;
 function displayTasks() {
     tasks.forEach((task) => {
         addListItem(task);
     });
 }
+exports.displayTasks = displayTasks;
 function removeTask(taskId) {
     const taskIndex = tasks.findIndex((task) => task.id === taskId);
     if (taskIndex !== -1) {
@@ -68,5 +72,6 @@ function removeTask(taskId) {
         displayTasks();
     }
 }
+exports.removeTask = removeTask;
 displayTasks();
 //# sourceMappingURL=index.js.map

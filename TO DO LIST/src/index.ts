@@ -40,7 +40,7 @@ form?.addEventListener("submit", (e) => {
 });
 
 // Cria elemento HTML para exibir uma tarefa e add na lista
-function addListItem(task: Task) {
+export function addListItem(task: Task) {
   const item = document.createElement("li");
   const label = document.createElement("label");
   const checkbox = document.createElement("input");
@@ -80,21 +80,21 @@ const saveTasks = () => {
 };
 
 // Recupera as tarefas salvas anteriormente
-function loadTasks(): Task[] {
+export function loadTasks(): Task[] {
   const taskJson = localStorage.getItem("TASKS");
   if (taskJson == null) return [];
   return JSON.parse(taskJson);
 }
 
 // Exibe todas as tarefas existentes
-function displayTasks() {
+export function displayTasks() {
   tasks.forEach((task) => {
     addListItem(task);
   });
 }
 
 // Deleta as tarefas
-function removeTask(taskId: string) {
+export function removeTask(taskId: string) {
   const taskIndex = tasks.findIndex((task) => task.id === taskId);
   if (taskIndex !== -1) {
     tasks.splice(taskIndex, 1);
