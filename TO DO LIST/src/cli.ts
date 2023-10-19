@@ -17,7 +17,7 @@ function showMenu() {
         type: "list",
         name: "choice",
         message: "Choose an option:",
-        choices: ["Add task", "List task", "Exit"],
+        choices: ["Add task", "Remove task", "List task", "Exit"],
       },
     ])
     .then((answers) => {
@@ -27,6 +27,9 @@ function showMenu() {
           break;
         case "List task":
           listTasks();
+          break;
+        case "Remove task":
+          removeTask();
           break;
         case "Exit":
           console.log("Exit CLI");
@@ -50,6 +53,32 @@ function addTask() {
       console.log("Task added successfully");
       showMenu();
     });
+}
+
+// Solicita remover a tarefa
+function removeTask() {
+  if (taskList.length === 0) {
+    console.log("No tasks found to remove.");
+    showMenu();
+  } else {
+    inquirer
+      .prompt([
+        {
+          type: "list",
+          name: "taskIndex",
+          message: "Choose the task to remove:",
+          choices: taskList.map((task, index) => ({
+            name: `${index + 1}. [${task.completed ? "✔" : " "}] ${task.title}`,
+            value: index,
+          })),
+        },
+      ])
+      .then((answers) => {
+        taskList.splice(answers.taskIndex, 1);
+        console.log("Task removed successfully");
+        showMenu();
+      });
+  }
 }
 
 // Lista as tarefas e armazena em taskList

@@ -1,5 +1,3 @@
-import { v4 as uuidV4 } from "uuid";
-
 // Definição Task que vai descrever a estrutura da tarefa
 type Task = {
   id: string;
@@ -24,7 +22,7 @@ form?.addEventListener("submit", (e) => {
   if (input?.value === "" || input?.value == null) return;
 
   const newTask: Task = {
-    id: uuidV4(),
+    id: Math.random().toString(),
     title: input.value,
     completed: false,
     createdAt: new Date(),
@@ -44,7 +42,7 @@ export function addListItem(task: Task) {
   const item = document.createElement("li");
   const label = document.createElement("label");
   const checkbox = document.createElement("input");
-  const removeButton = document.createElement("button");
+  // const removeButton = document.createElement("button");
   // marca tarefa como feita
   checkbox.addEventListener("change", () => {
     task.completed = checkbox.checked;
@@ -55,6 +53,7 @@ export function addListItem(task: Task) {
   checkbox.checked = task.completed;
 
   // Configuração do botão "Remover"
+  const removeButton = document.createElement("button");
   removeButton.className = "remove-button";
   removeButton.textContent = "Remove";
   removeButton.setAttribute("data-task-id", task.id);
@@ -64,14 +63,15 @@ export function addListItem(task: Task) {
     const taskId = (e.target as HTMLElement).getAttribute("data-task-id");
     if (taskId) {
       removeTask(taskId);
-      item.remove(); // Remove o item da lista no DOM
+      item.remove();
     }
   });
 
-  // Add elemnetos a lista
+  // Add elementos a lista
   label.append(checkbox, task.title);
   item.append(label);
   list?.appendChild(item);
+  label.append(removeButton);
 }
 
 // Armazena as tarefas

@@ -1,7 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.removeTask = exports.displayTasks = exports.loadTasks = exports.addListItem = void 0;
-const uuid_1 = require("uuid");
 const list = document.querySelector("#list");
 const form = document.querySelector("#new-task-form");
 const input = document.querySelector("#new-task-title");
@@ -12,7 +8,7 @@ form === null || form === void 0 ? void 0 : form.addEventListener("submit", (e) 
     if ((input === null || input === void 0 ? void 0 : input.value) === "" || (input === null || input === void 0 ? void 0 : input.value) == null)
         return;
     const newTask = {
-        id: (0, uuid_1.v4)(),
+        id: Math.random().toString(),
         title: input.value,
         completed: false,
         createdAt: new Date(),
@@ -22,17 +18,17 @@ form === null || form === void 0 ? void 0 : form.addEventListener("submit", (e) 
     addListItem(newTask);
     input.value = "";
 });
-function addListItem(task) {
+export function addListItem(task) {
     const item = document.createElement("li");
     const label = document.createElement("label");
     const checkbox = document.createElement("input");
-    const removeButton = document.createElement("button");
     checkbox.addEventListener("change", () => {
         task.completed = checkbox.checked;
         saveTasks();
     });
     checkbox.type = "checkbox";
     checkbox.checked = task.completed;
+    const removeButton = document.createElement("button");
     removeButton.className = "remove-button";
     removeButton.textContent = "Remove";
     removeButton.setAttribute("data-task-id", task.id);
@@ -46,25 +42,23 @@ function addListItem(task) {
     label.append(checkbox, task.title);
     item.append(label);
     list === null || list === void 0 ? void 0 : list.appendChild(item);
+    label.append(removeButton);
 }
-exports.addListItem = addListItem;
 const saveTasks = () => {
     localStorage.setItem("TASKS", JSON.stringify(tasks));
 };
-function loadTasks() {
+export function loadTasks() {
     const taskJson = localStorage.getItem("TASKS");
     if (taskJson == null)
         return [];
     return JSON.parse(taskJson);
 }
-exports.loadTasks = loadTasks;
-function displayTasks() {
+export function displayTasks() {
     tasks.forEach((task) => {
         addListItem(task);
     });
 }
-exports.displayTasks = displayTasks;
-function removeTask(taskId) {
+export function removeTask(taskId) {
     const taskIndex = tasks.findIndex((task) => task.id === taskId);
     if (taskIndex !== -1) {
         tasks.splice(taskIndex, 1);
@@ -72,6 +66,5 @@ function removeTask(taskId) {
         displayTasks();
     }
 }
-exports.removeTask = removeTask;
 displayTasks();
 //# sourceMappingURL=index.js.map

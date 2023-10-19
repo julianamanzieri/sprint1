@@ -1,13 +1,11 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const uuid_1 = require("uuid");
-class TodoList {
+import { v4 as uuidV4 } from "uuid";
+export default class TodoList {
     constructor() {
         this.tasks = [];
     }
     addTask(description) {
         const task = {
-            id: (0, uuid_1.v4)(),
+            id: uuidV4(),
             description,
             completed: false,
         };
@@ -34,5 +32,4 @@ class TodoList {
         return this.tasks;
     }
 }
-exports.default = TodoList;
 //# sourceMappingURL=todoList.js.map

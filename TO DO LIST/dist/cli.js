@@ -1,18 +1,13 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const inquirer_1 = __importDefault(require("inquirer"));
+import inquirer from "inquirer";
 const taskList = [];
 function showMenu() {
-    inquirer_1.default
+    inquirer
         .prompt([
         {
             type: "list",
             name: "choice",
             message: "Choose an option:",
-            choices: ["Add task", "List task", "Exit"],
+            choices: ["Add task", "Remove task", "List task", "Exit"],
         },
     ])
         .then((answers) => {
@@ -23,6 +18,9 @@ function showMenu() {
             case "List task":
                 listTasks();
                 break;
+            case "Remove task":
+                removeTask();
+                break;
             case "Exit":
                 console.log("Exit CLI");
                 break;
@@ -30,7 +28,7 @@ function showMenu() {
     });
 }
 function addTask() {
-    inquirer_1.default
+    inquirer
         .prompt([
         {
             type: "input",
@@ -43,6 +41,31 @@ function addTask() {
         console.log("Task added successfully");
         showMenu();
     });
+}
+function removeTask() {
+    if (taskList.length === 0) {
+        console.log("No tasks found to remove.");
+        showMenu();
+    }
+    else {
+        inquirer
+            .prompt([
+            {
+                type: "list",
+                name: "taskIndex",
+                message: "Choose the task to remove:",
+                choices: taskList.map((task, index) => ({
+                    name: `${index + 1}. [${task.completed ? "✔" : " "}] ${task.title}`,
+                    value: index,
+                })),
+            },
+        ])
+            .then((answers) => {
+            taskList.splice(answers.taskIndex, 1);
+            console.log("Task removed successfully");
+            showMenu();
+        });
+    }
 }
 function listTasks() {
     if (taskList.length === 0) {

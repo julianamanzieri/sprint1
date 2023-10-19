@@ -14,7 +14,6 @@ Este es un sencillho programa para crear una aplicación de lista de tareas util
 ## Tecnologías
 
 - [TypeScript](https://www.typescriptlang.org/)
-- [UUID](https://www.npmjs.com/package/uuid) para generar IDs de tarea únicos.
 
 ## Intruciones de Uso
 
